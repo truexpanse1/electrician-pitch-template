@@ -106,8 +106,11 @@
       </span>
     </div>
     <div class="flex items-center gap-3 text-xs">
-      <!-- Don-facing hub pill: default HIDDEN so prospects never see it; JS shows it only on non-branded routes -->
-      <a id="hub-pill" href="#hub" style="display:none"
+      <!-- Don-facing hub pill: DEFAULT VISIBLE so it works even without JS.
+           JS hides it only on branded e1-e4 prospect views. Trade-off:
+           if JS fails, prospects MIGHT see this small pill — acceptable
+           cost for Don's pitch needing to work reliably under any cache. -->
+      <a id="hub-pill" href="#hub" style="display:inline-flex"
          class="items-center gap-1.5 bg-brand/15 border border-brand/40 text-brand font-bold uppercase tracking-widest px-2.5 py-1 rounded-full hover:bg-brand/25 transition"
          title="Don's internal review hub — all demos + pitch pages">
         <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
@@ -740,8 +743,9 @@
         <p class="text-muted text-sm leading-relaxed mb-3" data-bind="footerBlurb">Licensed C-10 electrical contractor serving the Monterey Peninsula. Residential and commercial. Free estimates.</p>
         <div class="text-xs text-muted" data-bind="licenseLine">CA Lic. — Fully Insured</div>
       </div>
-      <!-- Demos column removed from footer — the hidden-class toggle was fragile and let the column vanish from Don's review view. Replaced by the bulletproof #hub pill in the utility bar + the dedicated /#hub dashboard. -->
-      <div id="footer-demos" style="display:none" data-bind-show-on-default="true">
+      <!-- Footer Demos column: DEFAULT VISIBLE so Don always has the nav even
+           if JS is stale or blocked. JS hides only on branded e1-e4 views. -->
+      <div id="footer-demos" style="display:block" data-bind-show-on-default="true">
         <h4 class="font-display text-sm uppercase tracking-widest mb-4">Demos</h4>
         <ul class="space-y-2 text-sm">
           <li><a href="#e1" class="text-gray-300 hover:text-brand transition flex items-center gap-2"><span class="text-brand font-bold">E1</span> AF Electric</a></li>
@@ -1115,14 +1119,14 @@
     const { view, brand } = getRoute();
     applyBrand(brand);
     showView(view);
-    // Bulletproof Don-only nav: default state is HIDDEN; JS shows them only when
-    // brand is 'default' (non-prospect view). If JS fails, prospects see nothing
-    // identifying this as one of multiple demos — failure mode is prospect-safe.
-    const showInternal = brand === 'default';
+    // FAIL-OPEN nav: HTML default = visible. JS only HIDES on branded views.
+    // If JS fails, Don always has nav links — that's the priority. Prospect
+    // privacy on branded views still works when JS runs normally.
+    const isProspectView = ['e1','e2','e3','e4'].includes(brand);
     const demos = document.getElementById('footer-demos');
-    if (demos) demos.style.display = showInternal ? 'block' : 'none';
+    if (demos) demos.style.display = isProspectView ? 'none' : 'block';
     const pill = document.getElementById('hub-pill');
-    if (pill) pill.style.display = showInternal ? 'inline-flex' : 'none';
+    if (pill) pill.style.display = isProspectView ? 'none' : 'inline-flex';
   }
 
   // Fade-in observer
