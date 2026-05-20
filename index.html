@@ -592,7 +592,7 @@
         <p class="text-muted text-sm leading-relaxed mb-3" data-bind="footerBlurb">Licensed C-10 electrical contractor serving the Monterey Peninsula. Residential and commercial. Free estimates.</p>
         <div class="text-xs text-muted" data-bind="licenseLine">CA Lic. — Fully Insured</div>
       </div>
-      <div>
+      <div id="footer-demos" class="hidden">
         <h4 class="font-display text-sm uppercase tracking-widest mb-4">Demos</h4>
         <ul class="space-y-2 text-sm">
           <li><a href="#e1" class="text-gray-300 hover:text-brand transition flex items-center gap-2"><span class="text-brand font-bold">E1</span> AF Electric</a></li>
@@ -950,6 +950,10 @@
     const { view, brand } = getRoute();
     applyBrand(brand);
     showView(view);
+    // Only show the cross-demo footer on the default/master view (for Don's review)
+    // Hide it on every branded electrician view so each prospect sees only their site
+    const demos = document.getElementById('footer-demos');
+    if (demos) demos.classList.toggle('hidden', brand !== 'default');
   }
 
   // Fade-in observer
