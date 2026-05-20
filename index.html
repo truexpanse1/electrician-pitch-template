@@ -1,0 +1,976 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title id="page-title">Electrician Landing Page Template — TrueXpanse</title>
+<meta name="description" id="page-desc" content="Landing page template built by TrueXpanse for Monterey-area electricians. Demonstrates conversion-grade copy, SEO schema, and brand swap." />
+<meta property="og:title" content="Electrician Landing Page Template — TrueXpanse" />
+<meta property="og:description" content="See exactly what a high-converting electrician site looks like — brand-swapped for your business in seconds." />
+<meta property="og:type" content="website" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Audiowide&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        fontFamily: {
+          display: ['Audiowide', 'system-ui', 'sans-serif'],
+          sans: ['Inter', 'system-ui', 'sans-serif'],
+        },
+      },
+    },
+  };
+</script>
+<style>
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Inter', system-ui, sans-serif; background: #0c0d12; color: #e8e9ed; }
+  .font-display { font-family: 'Audiowide', system-ui, sans-serif; letter-spacing: 0.02em; }
+  /* Brand-color CSS variables — overwritten by JS on hash change */
+  :root {
+    --brand-primary: #ff471d;
+    --brand-secondary: #ffb800;
+    --brand-dark: #0c0d12;
+    --brand-dark-2: #181a22;
+    --brand-border: #2a2c36;
+    --brand-text: #e8e9ed;
+    --brand-muted: #a8a9b3;
+  }
+  .text-brand { color: var(--brand-primary); }
+  .bg-brand { background-color: var(--brand-primary); }
+  .border-brand { border-color: var(--brand-primary); }
+  .ring-brand { --tw-ring-color: var(--brand-primary); }
+  .text-accent { color: var(--brand-secondary); }
+  .bg-accent { background-color: var(--brand-secondary); }
+  .bg-dark { background-color: var(--brand-dark); }
+  .bg-dark-2 { background-color: var(--brand-dark-2); }
+  .border-dark { border-color: var(--brand-border); }
+  .text-muted { color: var(--brand-muted); }
+
+  /* Marquee */
+  @keyframes scroll-x {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+  .marquee-track { animation: scroll-x 30s linear infinite; }
+
+  /* Hero overlay */
+  .hero-overlay {
+    background: linear-gradient(135deg, rgba(12,13,18,0.85) 0%, rgba(12,13,18,0.55) 50%, rgba(12,13,18,0.4) 100%);
+  }
+
+  /* Service card hover */
+  .service-card { transition: transform 0.3s ease, border-color 0.3s ease; }
+  .service-card:hover { transform: translateY(-4px); border-color: var(--brand-primary); }
+
+  /* Fade-in */
+  .fade-in { opacity: 0; transform: translateY(20px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .fade-in.is-visible { opacity: 1; transform: translateY(0); }
+
+  /* View transitions */
+  .view { display: none; }
+  .view.active { display: block; }
+
+  /* Nav bar transparency on scroll */
+  .nav-solid { background: rgba(12, 13, 18, 0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--brand-border); }
+</style>
+</head>
+<body class="bg-dark text-white antialiased">
+
+<!-- =================================================================
+     UTILITY BAR (top strip)
+================================================================= -->
+<div class="bg-dark-2 border-b border-dark text-sm">
+  <div class="max-w-7xl mx-auto px-4 py-2 flex flex-wrap items-center justify-between gap-2">
+    <div class="flex items-center gap-5 text-muted">
+      <span class="flex items-center gap-2">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-7 8-13a8 8 0 1 0-16 0c0 6 8 13 8 13z"/><circle cx="12" cy="9" r="2.5"/></svg>
+        <span data-bind="serviceArea">Monterey County, CA</span>
+      </span>
+      <span class="hidden sm:flex items-center gap-2">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+        <span data-bind="hours">Mon-Fri 7am-5pm</span>
+      </span>
+    </div>
+    <div class="flex items-center gap-3 text-xs">
+      <span class="text-muted">Demo built by</span>
+      <a href="https://truexpanse.com" target="_blank" rel="noopener" class="text-brand font-bold hover:underline">trueXpanse</a>
+    </div>
+  </div>
+</div>
+
+<!-- =================================================================
+     STICKY NAV
+================================================================= -->
+<nav id="top-nav" class="sticky top-0 z-50 nav-solid">
+  <div class="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between gap-4">
+    <a href="#home" class="flex items-center gap-3 group">
+      <div class="w-10 h-10 rounded-lg bg-brand flex items-center justify-center font-display text-xl text-white shadow-lg" data-bind="logoInitials">TX</div>
+      <span class="font-display text-base sm:text-lg tracking-wide" data-bind="brandName">TrueXpanse Electric</span>
+    </a>
+    <div class="hidden md:flex items-center gap-7 text-sm uppercase tracking-widest font-semibold text-gray-300">
+      <a href="#home" class="hover:text-brand transition">Home</a>
+      <a href="#services" class="hover:text-brand transition">Services</a>
+      <a href="#about" class="hover:text-brand transition">About</a>
+      <a href="#reviews" class="hover:text-brand transition">Reviews</a>
+      <a href="#contact" class="hover:text-brand transition">Contact</a>
+    </div>
+    <a data-bind-href="phoneTel" href="tel:" class="hidden sm:inline-flex items-center gap-2 bg-brand hover:opacity-90 transition text-white font-bold px-5 py-3 rounded-lg shadow-lg">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+      <span data-bind="phone">(831) 555-0100</span>
+    </a>
+  </div>
+</nav>
+
+<!-- =================================================================
+     HOME VIEW (default — electrician landing page)
+================================================================= -->
+<main id="view-home" class="view active">
+
+  <!-- HERO -->
+  <section class="relative min-h-[640px] flex items-center overflow-hidden" id="home">
+    <div class="absolute inset-0">
+      <img data-bind-src="heroImage" src="https://images.unsplash.com/photo-1565608438257-fac3c27beb36?auto=format&fit=crop&w=2000&q=80" alt="" class="w-full h-full object-cover" loading="eager"/>
+      <div class="absolute inset-0 hero-overlay"></div>
+    </div>
+    <div class="relative max-w-7xl mx-auto px-4 py-20 grid lg:grid-cols-2 gap-12 w-full items-center">
+      <div>
+        <div class="inline-flex items-center gap-2 bg-brand/10 border border-brand/40 text-brand text-xs font-bold uppercase tracking-widest px-3 py-1.5 rounded-full mb-6">
+          <span class="w-2 h-2 bg-brand rounded-full"></span>
+          <span data-bind="heroTag">Licensed C-10 Electrician</span>
+        </div>
+        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black leading-tight mb-6" data-bind="heroHeadline">
+          Monterey's Trusted Electrician — Done Right the First Time
+        </h1>
+        <p class="text-lg sm:text-xl text-gray-300 mb-8 max-w-xl" data-bind="heroSub">
+          From panel upgrades to EV chargers, residential rewires to emergency calls — fully licensed, insured, and on-time. Free estimates, transparent pricing, written guarantee.
+        </p>
+        <div class="flex flex-wrap gap-4">
+          <a href="#contact" class="inline-flex items-center gap-2 bg-brand hover:opacity-90 transition text-white font-bold px-7 py-4 rounded-lg shadow-xl text-base">
+            Get Your Free Quote
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+          </a>
+          <a data-bind-href="phoneTel" href="tel:" class="inline-flex items-center gap-2 border-2 border-white/30 hover:border-brand hover:text-brand transition text-white font-bold px-7 py-4 rounded-lg text-base">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            Call <span data-bind="phone">Now</span>
+          </a>
+        </div>
+        <div class="mt-10 flex flex-wrap items-center gap-x-8 gap-y-3 text-sm text-gray-300">
+          <span class="flex items-center gap-2"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#16c172" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg>Licensed &amp; Insured</span>
+          <span class="flex items-center gap-2"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#16c172" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg>Free Estimates</span>
+          <span class="flex items-center gap-2"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#16c172" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg>Same-Day Quotes</span>
+          <span class="flex items-center gap-2"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#16c172" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg>Written Warranty</span>
+        </div>
+      </div>
+      <div class="hidden lg:block">
+        <div class="bg-dark-2/80 backdrop-blur-md border border-dark rounded-2xl p-7 shadow-2xl">
+          <div class="flex items-center gap-3 mb-5">
+            <div class="w-12 h-12 rounded-full bg-brand/20 flex items-center justify-center">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--brand-primary)" stroke-width="2.5"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+            </div>
+            <div>
+              <div class="font-display text-lg">Fast Quote</div>
+              <div class="text-xs text-muted">Reply within 1 business hour</div>
+            </div>
+          </div>
+          <form name="hero-quote" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" action="/thank-you.html" class="space-y-3">
+            <input type="hidden" name="form-name" value="hero-quote"/>
+            <p class="hidden"><label>Don't fill this out: <input name="bot-field"/></label></p>
+            <input type="hidden" name="brand" data-bind-value="brandName" value="" />
+            <input name="name" placeholder="Your name" required class="w-full bg-dark border border-dark rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:ring-2 ring-brand transition"/>
+            <input name="phone" type="tel" placeholder="Phone" required class="w-full bg-dark border border-dark rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:ring-2 ring-brand transition"/>
+            <input name="email" type="email" placeholder="Email" required class="w-full bg-dark border border-dark rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:ring-2 ring-brand transition"/>
+            <select name="service" required class="w-full bg-dark border border-dark rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 ring-brand transition">
+              <option value="">What do you need help with?</option>
+              <option>Panel Upgrade</option>
+              <option>EV Charger Install</option>
+              <option>Lighting / LED</option>
+              <option>Remodel / Rewire</option>
+              <option>Emergency Service</option>
+              <option>Other</option>
+            </select>
+            <button type="submit" class="w-full bg-brand hover:opacity-90 transition text-white font-bold py-3.5 rounded-lg shadow-lg">
+              Send My Quote Request
+            </button>
+            <p class="text-xs text-muted text-center">No spam. We call back fast.</p>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MARQUEE -->
+  <section class="bg-brand py-5 overflow-hidden border-y border-dark">
+    <div class="flex marquee-track gap-12 whitespace-nowrap text-white font-display text-xl sm:text-2xl tracking-wide">
+      <span>★ <span data-bind="brandName">TrueXpanse Electric</span></span>
+      <span>★ Licensed &amp; Insured</span>
+      <span>★ Free Estimates</span>
+      <span>★ Same-Day Response</span>
+      <span>★ Residential &amp; Commercial</span>
+      <span>★ Panel Upgrades</span>
+      <span>★ EV Chargers</span>
+      <span>★ <span data-bind="brandName">TrueXpanse Electric</span></span>
+      <span>★ Licensed &amp; Insured</span>
+      <span>★ Free Estimates</span>
+      <span>★ Same-Day Response</span>
+      <span>★ Residential &amp; Commercial</span>
+      <span>★ Panel Upgrades</span>
+      <span>★ EV Chargers</span>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section class="py-20 bg-dark" id="services">
+    <div class="max-w-7xl mx-auto px-4">
+      <div class="text-center mb-14 fade-in">
+        <div class="text-brand uppercase tracking-[0.25em] font-bold text-sm mb-3">What We Do</div>
+        <h2 class="text-4xl sm:text-5xl font-black mb-4">Full-Service Electrical, From Outlet to Panel</h2>
+        <p class="text-muted max-w-2xl mx-auto text-lg">Residential and commercial work across the Monterey Peninsula. Code-compliant. Permitted. Done right the first time.</p>
+      </div>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6" id="services-grid">
+        <!-- service cards injected by JS -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="py-20 bg-dark-2 border-y border-dark" id="about">
+    <div class="max-w-7xl mx-auto px-4 grid lg:grid-cols-2 gap-12 items-center">
+      <div class="relative fade-in">
+        <img src="https://images.unsplash.com/photo-1581094794329-c8112a89af12?auto=format&fit=crop&w=1200&q=80" alt="Electrician working on panel" class="w-full rounded-2xl object-cover h-[440px] shadow-2xl"/>
+        <div class="absolute -bottom-6 -right-6 sm:right-6 bg-brand text-white rounded-2xl p-6 shadow-2xl text-center">
+          <div class="font-display text-5xl" data-bind="yearsBadge">15+</div>
+          <div class="text-xs uppercase tracking-widest font-bold mt-1">Years on the Job</div>
+        </div>
+      </div>
+      <div class="fade-in">
+        <div class="text-brand uppercase tracking-[0.25em] font-bold text-sm mb-3">About Us</div>
+        <h2 class="text-4xl sm:text-5xl font-black mb-5 leading-tight" data-bind="aboutHeadline">Local craftsmanship the Peninsula trusts</h2>
+        <p class="text-lg text-gray-300 mb-6" data-bind="aboutBody">
+          Locally owned and operated. Every job is bid honestly, scheduled on time, and finished to code. We answer the phone, show up when we say, and clean up when we leave.
+        </p>
+        <ul class="space-y-3 mb-8 text-gray-300">
+          <li class="flex items-start gap-3"><svg class="text-brand mt-1 flex-shrink-0" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg>Licensed C-10 contractors — work pulled and permitted</li>
+          <li class="flex items-start gap-3"><svg class="text-brand mt-1 flex-shrink-0" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg>Free, written estimates — no surprise add-ons</li>
+          <li class="flex items-start gap-3"><svg class="text-brand mt-1 flex-shrink-0" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg>Warranty in writing on every job</li>
+          <li class="flex items-start gap-3"><svg class="text-brand mt-1 flex-shrink-0" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg>Same-day callbacks, same-week starts when possible</li>
+        </ul>
+        <a href="#contact" class="inline-flex items-center gap-2 bg-brand hover:opacity-90 transition text-white font-bold px-6 py-3.5 rounded-lg shadow-lg">
+          Schedule a Walkthrough
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- REVIEWS -->
+  <section class="py-20 bg-dark" id="reviews">
+    <div class="max-w-7xl mx-auto px-4">
+      <div class="text-center mb-14 fade-in">
+        <div class="text-brand uppercase tracking-[0.25em] font-bold text-sm mb-3">Real Customer Reviews</div>
+        <h2 class="text-4xl sm:text-5xl font-black mb-4" data-bind="reviewsHeadline">What Our Neighbors Say</h2>
+        <div class="text-muted text-sm" data-bind="reviewsSubLine">★★★★★ Verified reviews from real customers</div>
+      </div>
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6" id="reviews-grid">
+        <!-- reviews injected by JS — only real ones -->
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="py-20 bg-dark-2 border-y border-dark" id="contact">
+    <div class="max-w-5xl mx-auto px-4">
+      <div class="text-center mb-12 fade-in">
+        <div class="text-brand uppercase tracking-[0.25em] font-bold text-sm mb-3">Get In Touch</div>
+        <h2 class="text-4xl sm:text-5xl font-black mb-4">Ready When You Are</h2>
+        <p class="text-muted text-lg max-w-2xl mx-auto">Tell us what you need. We'll send back a free written estimate, usually same business day.</p>
+      </div>
+      <div class="grid md:grid-cols-3 gap-6 mb-10">
+        <a data-bind-href="phoneTel" href="tel:" class="bg-dark border border-dark hover:border-brand transition rounded-xl p-6 text-center group">
+          <div class="w-12 h-12 mx-auto mb-3 bg-brand/10 rounded-full flex items-center justify-center group-hover:bg-brand/20 transition">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--brand-primary)" stroke-width="2.5"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          </div>
+          <div class="font-bold text-white" data-bind="phone">(831) 555-0100</div>
+          <div class="text-xs text-muted mt-1">Call or text</div>
+        </a>
+        <div class="bg-dark border border-dark rounded-xl p-6 text-center">
+          <div class="w-12 h-12 mx-auto mb-3 bg-brand/10 rounded-full flex items-center justify-center">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--brand-primary)" stroke-width="2"><path d="M12 22s8-7 8-13a8 8 0 1 0-16 0c0 6 8 13 8 13z"/><circle cx="12" cy="9" r="2.5"/></svg>
+          </div>
+          <div class="font-bold text-white" data-bind="serviceArea">Monterey County, CA</div>
+          <div class="text-xs text-muted mt-1" data-bind="address">Serving the Peninsula</div>
+        </div>
+        <div class="bg-dark border border-dark rounded-xl p-6 text-center">
+          <div class="w-12 h-12 mx-auto mb-3 bg-brand/10 rounded-full flex items-center justify-center">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--brand-primary)" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+          </div>
+          <div class="font-bold text-white" data-bind="hours">Mon-Fri 7am-5pm</div>
+          <div class="text-xs text-muted mt-1">Emergency calls anytime</div>
+        </div>
+      </div>
+      <form name="contact-quote" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" action="/thank-you.html" class="bg-dark rounded-2xl p-8 border border-dark space-y-4 shadow-2xl">
+        <input type="hidden" name="form-name" value="contact-quote"/>
+        <p class="hidden"><label>Don't fill this out: <input name="bot-field"/></label></p>
+        <input type="hidden" name="brand" data-bind-value="brandName" value=""/>
+        <div class="grid sm:grid-cols-2 gap-4">
+          <input name="name" placeholder="Full name" required class="bg-dark-2 border border-dark rounded-lg px-4 py-3.5 text-white placeholder-gray-500 focus:outline-none focus:ring-2 ring-brand transition"/>
+          <input name="phone" type="tel" placeholder="Phone" required class="bg-dark-2 border border-dark rounded-lg px-4 py-3.5 text-white placeholder-gray-500 focus:outline-none focus:ring-2 ring-brand transition"/>
+        </div>
+        <div class="grid sm:grid-cols-2 gap-4">
+          <input name="email" type="email" placeholder="Email" required class="bg-dark-2 border border-dark rounded-lg px-4 py-3.5 text-white placeholder-gray-500 focus:outline-none focus:ring-2 ring-brand transition"/>
+          <select name="service" required class="bg-dark-2 border border-dark rounded-lg px-4 py-3.5 text-white focus:outline-none focus:ring-2 ring-brand transition">
+            <option value="">What do you need?</option>
+            <option>Panel Upgrade</option>
+            <option>EV Charger Install</option>
+            <option>Lighting / LED</option>
+            <option>Remodel / Rewire</option>
+            <option>Generator</option>
+            <option>Emergency Service</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <textarea name="message" rows="4" placeholder="Tell us about the job (square footage, age of home, what's not working, etc.)" class="w-full bg-dark-2 border border-dark rounded-lg px-4 py-3.5 text-white placeholder-gray-500 focus:outline-none focus:ring-2 ring-brand transition"></textarea>
+        <button type="submit" class="w-full sm:w-auto bg-brand hover:opacity-90 transition text-white font-bold px-8 py-4 rounded-lg shadow-xl">
+          Send Quote Request
+        </button>
+      </form>
+    </div>
+  </section>
+
+  <!-- LICENSE STRIP -->
+  <section class="bg-brand py-7">
+    <div class="max-w-7xl mx-auto px-4 flex flex-wrap items-center justify-between gap-4">
+      <div class="font-display text-lg sm:text-xl text-white" data-bind="licenseStrip">CA Licensed Electrical Contractor — Fully Insured</div>
+      <a data-bind-href="phoneTel" href="tel:" class="bg-white text-black font-bold px-6 py-3 rounded-lg hover:bg-gray-100 transition">
+        Call <span data-bind="phone">Now</span>
+      </a>
+    </div>
+  </section>
+
+</main>
+
+<!-- =================================================================
+     ELECTRICIAN BRAND VIEWS — same template, different brand
+     (all share #view-home structure; brand swap happens via JS)
+================================================================= -->
+
+<!-- =================================================================
+     GHL VIEW
+================================================================= -->
+<main id="view-ghl" class="view">
+  <section class="py-20 bg-dark min-h-screen">
+    <div class="max-w-5xl mx-auto px-4">
+      <div class="text-brand uppercase tracking-[0.25em] font-bold text-sm mb-3">The CRM Backbone</div>
+      <h1 class="text-5xl sm:text-6xl font-black mb-6 leading-tight">A website is just a billboard <span class="text-brand">without GoHighLevel</span>.</h1>
+      <p class="text-xl text-gray-300 mb-12 max-w-3xl">Your new site brings the leads. GoHighLevel (GHL) is the system that <em>catches</em> them, <em>follows up</em> automatically, and <em>books the job</em> before your competition even calls back.</p>
+
+      <div class="grid md:grid-cols-2 gap-8 mb-16">
+        <div class="bg-dark-2 border border-dark rounded-2xl p-7">
+          <div class="text-brand font-display text-3xl mb-3">01</div>
+          <h3 class="text-2xl font-bold mb-3">Every lead, in one place</h3>
+          <p class="text-muted">Form submissions, missed calls, texts, voicemails, social DMs — all funneled into one inbox. No more leads dying in three different apps.</p>
+        </div>
+        <div class="bg-dark-2 border border-dark rounded-2xl p-7">
+          <div class="text-brand font-display text-3xl mb-3">02</div>
+          <h3 class="text-2xl font-bold mb-3">Automatic follow-up</h3>
+          <p class="text-muted">The instant someone fills out the quote form, they get a text + email back within 60 seconds. You look responsive even when you're on a ladder.</p>
+        </div>
+        <div class="bg-dark-2 border border-dark rounded-2xl p-7">
+          <div class="text-brand font-display text-3xl mb-3">03</div>
+          <h3 class="text-2xl font-bold mb-3">Calendar that books itself</h3>
+          <p class="text-muted">Customers pick a walkthrough slot from your real availability. No phone tag. No back-and-forth. Just appointments on the books.</p>
+        </div>
+        <div class="bg-dark-2 border border-dark rounded-2xl p-7">
+          <div class="text-brand font-display text-3xl mb-3">04</div>
+          <h3 class="text-2xl font-bold mb-3">Review requests on autopilot</h3>
+          <p class="text-muted">Job complete? GHL automatically texts the customer the Google review link 24 hours later. Your star count grows while you work.</p>
+        </div>
+      </div>
+
+      <div class="bg-brand rounded-2xl p-10 text-center">
+        <h2 class="font-display text-3xl sm:text-4xl text-white mb-4">The hard truth</h2>
+        <p class="text-white/95 text-lg max-w-3xl mx-auto mb-6">The electricians winning Monterey aren't <em>better</em> at the trade. They just answer faster, follow up harder, and never let a lead go cold. GHL is how. We set it up, train you, and run it.</p>
+        <a href="#summary" class="inline-block bg-white text-black font-bold px-7 py-3.5 rounded-lg hover:bg-gray-100 transition">See the Full Stack →</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- =================================================================
+     MAT VIEW
+================================================================= -->
+<main id="view-mat" class="view">
+  <section class="py-20 bg-dark min-h-screen">
+    <div class="max-w-5xl mx-auto px-4">
+      <div class="text-brand uppercase tracking-[0.25em] font-bold text-sm mb-3">Massive Action Tracker</div>
+      <h1 class="text-5xl sm:text-6xl font-black mb-6 leading-tight">GHL catches leads. <span class="text-brand">MAT closes them.</span></h1>
+      <p class="text-xl text-gray-300 mb-12 max-w-3xl">Massive Action Tracker (MAT) is the activity engine that sits on top of GoHighLevel. It tells you — and your crew — exactly what to do today to keep the calendar full and the deposits coming in.</p>
+
+      <div class="space-y-6 mb-16">
+        <div class="bg-dark-2 border-l-4 border-brand rounded-r-2xl p-7">
+          <h3 class="text-2xl font-bold mb-2">Daily activity targets</h3>
+          <p class="text-muted">Quotes sent, follow-ups made, jobs scheduled, reviews requested. You see your scorecard the moment you open the app. No guessing what to do — you just <em>do</em>.</p>
+        </div>
+        <div class="bg-dark-2 border-l-4 border-brand rounded-r-2xl p-7">
+          <h3 class="text-2xl font-bold mb-2">Auto-sync with GoHighLevel</h3>
+          <p class="text-muted">Every deal that closes in GHL shows up in MAT instantly. Revenue tracked. Goal progress updated. Owner sees the truth, daily.</p>
+        </div>
+        <div class="bg-dark-2 border-l-4 border-brand rounded-r-2xl p-7">
+          <h3 class="text-2xl font-bold mb-2">AI content engine</h3>
+          <p class="text-muted">MAT generates social posts, blog drafts, and ad copy for your electrical business — in your voice, with your photos. We push them to GHL's social planner so you're posting consistently without spending a Saturday on it.</p>
+        </div>
+        <div class="bg-dark-2 border-l-4 border-brand rounded-r-2xl p-7">
+          <h3 class="text-2xl font-bold mb-2">SEO &amp; competitor intel</h3>
+          <p class="text-muted">MAT tracks where you rank for "electrician Monterey," "panel upgrade Salinas," "EV charger install Pacific Grove" — and shows you exactly which competitors you're losing to, and on which keywords.</p>
+        </div>
+      </div>
+
+      <div class="bg-dark-2 border border-dark rounded-2xl p-10">
+        <div class="text-brand uppercase tracking-widest font-bold text-xs mb-3">Built by Don Smith, TrueXpanse</div>
+        <h3 class="text-3xl font-black mb-4">MAT is what we use ourselves.</h3>
+        <p class="text-gray-300 text-lg mb-4">It's not a theory — it's the same daily-action operating system Don uses to run TrueXpanse, the agency that built this site for you. If it works to grow our business, it works to grow yours.</p>
+        <a href="#summary" class="inline-block bg-brand text-white font-bold px-7 py-3.5 rounded-lg hover:opacity-90 transition">See the Full Stack →</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- =================================================================
+     TRUEXPANSE COACHING VIEW
+================================================================= -->
+<main id="view-truexpanse" class="view">
+  <section class="py-20 bg-dark min-h-screen">
+    <div class="max-w-5xl mx-auto px-4">
+      <div class="text-brand uppercase tracking-[0.25em] font-bold text-sm mb-3">TrueXpanse Coaching</div>
+      <h1 class="text-5xl sm:text-6xl font-black mb-6 leading-tight">Software runs the system. <span class="text-brand">Coaching runs you.</span></h1>
+      <p class="text-xl text-gray-300 mb-12 max-w-3xl">A great site, a great CRM, and a great tracker don't matter if the owner is stuck. TrueXpanse coaching is the weekly accountability and decision-making layer that turns tools into revenue.</p>
+
+      <div class="grid md:grid-cols-3 gap-6 mb-16">
+        <div class="bg-dark-2 border border-dark rounded-2xl p-7">
+          <div class="w-12 h-12 bg-brand/20 rounded-full flex items-center justify-center mb-4">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--brand-primary)" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+          </div>
+          <h3 class="text-xl font-bold mb-2">Weekly 1:1 calls</h3>
+          <p class="text-muted text-sm">Numbers reviewed. Bottlenecks named. Next 7 days mapped. No fluff.</p>
+        </div>
+        <div class="bg-dark-2 border border-dark rounded-2xl p-7">
+          <div class="w-12 h-12 bg-brand/20 rounded-full flex items-center justify-center mb-4">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--brand-primary)" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="M22 4 12 14.01l-3-3"/></svg>
+          </div>
+          <h3 class="text-xl font-bold mb-2">Daily accountability</h3>
+          <p class="text-muted text-sm">MAT tracks activity. Don reviews it. If the numbers slip, you hear about it Monday — not next quarter.</p>
+        </div>
+        <div class="bg-dark-2 border border-dark rounded-2xl p-7">
+          <div class="w-12 h-12 bg-brand/20 rounded-full flex items-center justify-center mb-4">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--brand-primary)" stroke-width="2.5"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><path d="M20 8v6M23 11h-6"/></svg>
+          </div>
+          <h3 class="text-xl font-bold mb-2">Hire &amp; scale support</h3>
+          <p class="text-muted text-sm">When it's time to bring on a second electrician, dispatcher, or office manager — we map the role, hire process, and pay structure.</p>
+        </div>
+      </div>
+
+      <div class="bg-gradient-to-br from-brand to-orange-700 rounded-2xl p-10 text-white">
+        <h3 class="font-display text-3xl mb-4">The discipline-mentor model</h3>
+        <p class="text-white/95 text-lg mb-3">TrueXpanse doesn't sell motivation. We sell <strong>discipline</strong>. The owners we work with don't need a hype guy — they need someone honest enough to look at the numbers, name the bottleneck, and make sure the work actually gets done.</p>
+        <p class="text-white/90 text-sm italic">"Evaluate. Recalculate. Counsel. Execute."</p>
+        <a href="#summary" class="mt-6 inline-block bg-white text-black font-bold px-7 py-3.5 rounded-lg hover:bg-gray-100 transition">See the Full Stack →</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- =================================================================
+     QUANTUM AI COMMAND VIEW
+================================================================= -->
+<main id="view-qac" class="view">
+  <section class="py-20 bg-dark min-h-screen">
+    <div class="max-w-5xl mx-auto px-4">
+      <div class="text-brand uppercase tracking-[0.25em] font-bold text-sm mb-3">Quantum AI Command</div>
+      <h1 class="text-5xl sm:text-6xl font-black mb-6 leading-tight">Your own <span class="text-brand">AI back-office</span>, installed and maintained.</h1>
+      <p class="text-xl text-gray-300 mb-12 max-w-3xl">Quantum AI Command is our managed Claude Code installation. We set up an AI operator that lives inside your business — drafting quotes, writing follow-up emails, generating social posts, organizing job photos, and answering your "how do I..." questions in plain English.</p>
+
+      <div class="grid md:grid-cols-2 gap-6 mb-12">
+        <div class="bg-dark-2 border border-dark rounded-xl p-6">
+          <div class="text-brand font-bold uppercase text-xs tracking-widest mb-2">Quote drafting</div>
+          <p>"Draft an estimate for a 200-amp panel upgrade with EV-ready subpanel" — done in 30 seconds, in your voice, using your past pricing.</p>
+        </div>
+        <div class="bg-dark-2 border border-dark rounded-xl p-6">
+          <div class="text-brand font-bold uppercase text-xs tracking-widest mb-2">Customer follow-up</div>
+          <p>AI writes the 3-touch email sequence for every "thinking about it" lead. You approve. It sends.</p>
+        </div>
+        <div class="bg-dark-2 border border-dark rounded-xl p-6">
+          <div class="text-brand font-bold uppercase text-xs tracking-widest mb-2">Photo &amp; content engine</div>
+          <p>Snap a before/after on your phone. AI captions it, posts it to your Google profile, drafts the matching social post.</p>
+        </div>
+        <div class="bg-dark-2 border border-dark rounded-xl p-6">
+          <div class="text-brand font-bold uppercase text-xs tracking-widest mb-2">"How do I..." answers</div>
+          <p>Code questions, permitting questions, marketing questions, hiring questions — your AI knows your business and answers in plain English.</p>
+        </div>
+      </div>
+
+      <div class="bg-dark-2 border-2 border-brand rounded-2xl p-10">
+        <h3 class="font-display text-3xl mb-4">Setup. Train. Maintain.</h3>
+        <p class="text-gray-300 text-lg mb-3">One setup fee + a flat monthly retainer. We install, train your team, and keep it current as the models get smarter. No DIY headaches. No subscription stacking. One number per month, one phone call when something breaks.</p>
+        <a href="#summary" class="mt-4 inline-block bg-brand text-white font-bold px-7 py-3.5 rounded-lg hover:opacity-90 transition">See the Full Stack →</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- =================================================================
+     SUMMARY VIEW
+================================================================= -->
+<main id="view-summary" class="view">
+  <section class="py-20 bg-dark min-h-screen">
+    <div class="max-w-6xl mx-auto px-4">
+      <div class="text-brand uppercase tracking-[0.25em] font-bold text-sm mb-3">The Full Stack</div>
+      <h1 class="text-5xl sm:text-6xl font-black mb-6 leading-tight">One agency. <span class="text-brand">Four layers.</span> One growth engine.</h1>
+      <p class="text-xl text-gray-300 mb-14 max-w-3xl">Most agencies sell you a website and disappear. We build the entire system — and we run it with you, week after week.</p>
+
+      <div class="grid md:grid-cols-2 gap-6 mb-14">
+        <a href="#home" class="block bg-dark-2 border border-dark hover:border-brand transition rounded-2xl p-7 group">
+          <div class="flex items-start justify-between mb-3">
+            <div class="font-display text-2xl">01. Website</div>
+            <svg class="text-brand opacity-0 group-hover:opacity-100 transition" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+          </div>
+          <p class="text-muted">The conversion-grade landing page you're looking at right now. SEO-loaded, mobile-fast, brand-tight, lead-form-first.</p>
+        </a>
+        <a href="#ghl" class="block bg-dark-2 border border-dark hover:border-brand transition rounded-2xl p-7 group">
+          <div class="flex items-start justify-between mb-3">
+            <div class="font-display text-2xl">02. GoHighLevel</div>
+            <svg class="text-brand opacity-0 group-hover:opacity-100 transition" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+          </div>
+          <p class="text-muted">CRM, calendar, missed-call text-back, review automation. Catches every lead, follows up automatically, books the job.</p>
+        </a>
+        <a href="#mat" class="block bg-dark-2 border border-dark hover:border-brand transition rounded-2xl p-7 group">
+          <div class="flex items-start justify-between mb-3">
+            <div class="font-display text-2xl">03. MAT</div>
+            <svg class="text-brand opacity-0 group-hover:opacity-100 transition" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+          </div>
+          <p class="text-muted">Daily activity tracker, revenue dashboard, AI content engine, SEO intel — your owner's cockpit, on every device.</p>
+        </a>
+        <a href="#truexpanse" class="block bg-dark-2 border border-dark hover:border-brand transition rounded-2xl p-7 group">
+          <div class="flex items-start justify-between mb-3">
+            <div class="font-display text-2xl">04. Coaching</div>
+            <svg class="text-brand opacity-0 group-hover:opacity-100 transition" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+          </div>
+          <p class="text-muted">Weekly 1:1 calls with Don. Numbers reviewed. Bottlenecks named. Discipline, not motivation. Mentor, not cheerleader.</p>
+        </a>
+        <a href="#qac" class="block bg-dark-2 border border-dark hover:border-brand transition rounded-2xl p-7 group md:col-span-2">
+          <div class="flex items-start justify-between mb-3">
+            <div class="font-display text-2xl">05. Quantum AI Command <span class="text-sm text-brand uppercase tracking-widest ml-2">Optional Add-On</span></div>
+            <svg class="text-brand opacity-0 group-hover:opacity-100 transition" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+          </div>
+          <p class="text-muted">We install and maintain an AI operator inside your business. Drafts quotes, writes follow-ups, captions photos, answers questions. Setup + flat monthly.</p>
+        </a>
+      </div>
+
+      <div class="bg-brand text-white rounded-3xl p-10 text-center">
+        <h2 class="font-display text-4xl sm:text-5xl mb-5">Ready to talk?</h2>
+        <p class="text-white/95 text-lg mb-8 max-w-2xl mx-auto">15-minute call. We'll show you exactly what we'd build, what it costs, and what timeline to expect. No high-pressure pitch. We don't need every electrician — we want the right one.</p>
+        <a href="https://truexpanse.com" target="_blank" rel="noopener" class="inline-block bg-white text-black font-bold px-8 py-4 rounded-lg hover:bg-gray-100 transition text-lg">
+          Book Your Strategy Call →
+        </a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- =================================================================
+     FOOTER (always visible)
+================================================================= -->
+<footer class="bg-dark-2 border-t border-dark pt-14 pb-6">
+  <div class="max-w-7xl mx-auto px-4">
+    <div class="grid md:grid-cols-4 gap-10 mb-12">
+      <div>
+        <div class="flex items-center gap-3 mb-4">
+          <div class="w-10 h-10 rounded-lg bg-brand flex items-center justify-center font-display text-xl text-white" data-bind="logoInitials">TX</div>
+          <span class="font-display text-lg" data-bind="brandName">TrueXpanse Electric</span>
+        </div>
+        <p class="text-muted text-sm leading-relaxed mb-3" data-bind="footerBlurb">Licensed C-10 electrical contractor serving the Monterey Peninsula. Residential and commercial. Free estimates.</p>
+        <div class="text-xs text-muted" data-bind="licenseLine">CA Lic. — Fully Insured</div>
+      </div>
+      <div>
+        <h4 class="font-display text-sm uppercase tracking-widest mb-4">Demos</h4>
+        <ul class="space-y-2 text-sm">
+          <li><a href="#e1" class="text-gray-300 hover:text-brand transition flex items-center gap-2"><span class="text-brand font-bold">E1</span> AF Electric</a></li>
+          <li><a href="#e2" class="text-gray-300 hover:text-brand transition flex items-center gap-2"><span class="text-brand font-bold">E2</span> Point Break Electric</a></li>
+          <li><a href="#e3" class="text-gray-300 hover:text-brand transition flex items-center gap-2"><span class="text-brand font-bold">E3</span> Aragon Electrical</a></li>
+          <li><a href="#e4" class="text-gray-300 hover:text-brand transition flex items-center gap-2"><span class="text-brand font-bold">E4</span> Oscar's Electric</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="font-display text-sm uppercase tracking-widest mb-4">The Stack</h4>
+        <ul class="space-y-2 text-sm">
+          <li><a href="#ghl" class="text-gray-300 hover:text-brand transition">GoHighLevel CRM</a></li>
+          <li><a href="#mat" class="text-gray-300 hover:text-brand transition">Massive Action Tracker</a></li>
+          <li><a href="#truexpanse" class="text-gray-300 hover:text-brand transition">TrueXpanse Coaching</a></li>
+          <li><a href="#qac" class="text-gray-300 hover:text-brand transition">Quantum AI Command</a></li>
+          <li><a href="#summary" class="text-gray-300 hover:text-brand transition font-bold">Full Stack Summary →</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="font-display text-sm uppercase tracking-widest mb-4">Contact</h4>
+        <ul class="space-y-2 text-sm">
+          <li><a data-bind-href="phoneTel" href="tel:" class="text-gray-300 hover:text-brand transition flex items-center gap-2">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            <span data-bind="phone">(831) 555-0100</span>
+          </a></li>
+          <li class="text-gray-300 flex items-center gap-2">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-7 8-13a8 8 0 1 0-16 0c0 6 8 13 8 13z"/><circle cx="12" cy="9" r="2.5"/></svg>
+            <span data-bind="serviceArea">Monterey, CA</span>
+          </li>
+          <li class="text-gray-300 flex items-center gap-2">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+            <span data-bind="hours">Mon-Fri 7am-5pm</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="border-t border-dark pt-6 flex flex-wrap items-center justify-between gap-3 text-xs text-muted">
+      <div>&copy; <span id="year"></span> <span data-bind="brandName">TrueXpanse Electric</span>. All rights reserved.</div>
+      <div>Designed &amp; built by <a href="https://truexpanse.com" target="_blank" rel="noopener" class="text-brand font-bold hover:underline">TrueXpanse</a></div>
+    </div>
+  </div>
+</footer>
+
+<!-- =================================================================
+     JSON-LD (rewritten by JS per brand)
+================================================================= -->
+<script type="application/ld+json" id="brand-schema">{}</script>
+
+<!-- =================================================================
+     BRAND CONFIG + ROUTER
+================================================================= -->
+<script>
+  // ── BRAND CONFIGS ────────────────────────────────────────────────
+  // Real data extracted from each electrician's live site.
+  // Brand colors are chosen as defensible placeholders to match the
+  // tone of each business — final colors confirmed with each owner.
+  // Testimonials are REAL only — verbatim from the live site.
+  const BRANDS = {
+    default: {
+      id: 'default',
+      brandName: 'TrueXpanse Electric',
+      logoInitials: 'TX',
+      phone: '(831) 555-0100',
+      phoneTel: 'tel:+18315550100',
+      address: 'Monterey, CA',
+      serviceArea: 'Monterey County, CA',
+      hours: 'Mon-Fri 7am-5pm',
+      yearsBadge: '15+',
+      heroTag: 'Licensed C-10 Electrician',
+      heroHeadline: "Monterey's Trusted Electrician — Done Right the First Time",
+      heroSub: "From panel upgrades to EV chargers, residential rewires to emergency calls — fully licensed, insured, and on-time. Free estimates, transparent pricing, written guarantee.",
+      heroImage: 'https://images.unsplash.com/photo-1565608438257-fac3c27beb36?auto=format&fit=crop&w=2000&q=80',
+      aboutHeadline: 'Local craftsmanship the Peninsula trusts',
+      aboutBody: 'Locally owned and operated. Every job is bid honestly, scheduled on time, and finished to code. We answer the phone, show up when we say, and clean up when we leave.',
+      reviewsHeadline: 'What Our Neighbors Say',
+      reviewsSubLine: '★★★★★ Verified reviews from real customers',
+      licenseStrip: 'CA Licensed Electrical Contractor — Fully Insured',
+      licenseLine: 'CA Lic. — Fully Insured',
+      footerBlurb: 'Licensed C-10 electrical contractor serving the Monterey Peninsula. Residential and commercial. Free estimates.',
+      colors: { primary: '#ff471d', secondary: '#ffb800', dark: '#0c0d12', dark2: '#181a22', border: '#2a2c36' },
+      services: defaultServices(),
+      reviews: [],
+      legalName: 'TrueXpanse Electric (demo)',
+      licenseId: '',
+    },
+
+    // ── E1: AF Electric ──────────────────────────────────────────
+    e1: {
+      id: 'e1',
+      brandName: 'AF Electric',
+      logoInitials: 'AF',
+      phone: '(831) 241-8785',
+      phoneTel: 'tel:+18312418785',
+      address: 'Monterey, CA',
+      serviceArea: 'Monterey, Marina, Salinas & Pacific Grove',
+      hours: '24/7 Service — Day or Night',
+      yearsBadge: '24/7',
+      heroTag: '24/7 Monterey Electrician',
+      heroHeadline: "Stellar Workmanship. Around-the-Clock. AF Electric.",
+      heroSub: "Residential, commercial, indoor & outdoor lighting, spa hookups, outlet troubleshooting, trenching. Available every day of the week.",
+      heroImage: 'https://images.unsplash.com/photo-1565608438257-fac3c27beb36?auto=format&fit=crop&w=2000&q=80',
+      aboutHeadline: 'Andres Flores — your "go to" electrician',
+      aboutBody: 'Customers describe AF Electric as "professional, knowledgeable, prompt." We respond when the phone rings, we show up on time, we leave a clean job site, and we stand behind the work.',
+      reviewsHeadline: 'What Monterey Says About AF Electric',
+      reviewsSubLine: '★★★★★ Verified customer reviews — Monterey, Marina, Salinas, Pacific Grove',
+      licenseStrip: 'AF Electric — Licensed Electrical Contractor, Fully Insured',
+      licenseLine: 'Andres Flores, Owner — Fully Insured',
+      footerBlurb: '24/7 residential and commercial electrical services across the Monterey Peninsula. Owner-operated by Andres Flores.',
+      colors: { primary: '#0066ff', secondary: '#ffcc00', dark: '#0a0f1f', dark2: '#141a2e', border: '#262d44' },
+      services: defaultServices(),
+      reviews: [
+        { stars: 5, body: "Professional, knowledgeable and prompt. AF Electric is an excellent team.", author: 'Ruben R.', meta: 'Marina, CA' },
+        { stars: 5, body: "Professional, efficient, proficient, clean and prompt. I would highly recommend.", author: 'John M.', meta: 'Salinas, CA' },
+        { stars: 5, body: "Stellar workmanship and accountability. A.F. Electric is now my 'go to' electrician.", author: 'Eric B.', meta: 'Monterey, CA' },
+        { stars: 5, body: "Professional, efficient, and thorough. Quality of work is top notch.", author: 'Tally H.', meta: 'Pacific Grove, CA' },
+      ],
+      legalName: 'AF Electric',
+      licenseId: '',
+    },
+
+    // ── E2: Point Break Electric ─────────────────────────────────
+    e2: {
+      id: 'e2',
+      brandName: 'Point Break Electric',
+      logoInitials: 'PB',
+      phone: '(831) 747-7503',
+      phoneTel: 'tel:+18317477503',
+      address: 'Monterey, CA 93940',
+      serviceArea: 'Monterey Peninsula',
+      hours: 'Mon-Fri 7am-5pm',
+      yearsBadge: 'C-10',
+      heroTag: 'CA Lic. #1092452',
+      heroHeadline: "Modern Electrical for the Monterey Peninsula",
+      heroSub: "EV charging stations. Panel upgrades. LED & recessed lighting. Remodels, rewiring, standby generators. Built for how Monterey lives today.",
+      heroImage: 'https://images.unsplash.com/photo-1593941707882-a5bba14938c7?auto=format&fit=crop&w=2000&q=80',
+      aboutHeadline: 'Quality electrical work — Monterey Peninsula',
+      aboutBody: 'Point Break Electric specializes in the electrical work the modern Monterey home actually needs: EV charging stations, panel upgrades for higher loads, LED lighting that lasts, and clean remodel work that passes inspection on the first call.',
+      reviewsHeadline: 'Reviews',
+      reviewsSubLine: 'Real customer reviews coming soon — request samples from the owner',
+      licenseStrip: 'Point Break Electric — CA Lic. #1092452, Fully Insured',
+      licenseLine: 'CA Lic. #1092452 — Fully Insured',
+      footerBlurb: 'Licensed C-10 electrical contractor (CA #1092452) serving the Monterey Peninsula. EV chargers, panel upgrades, lighting, generators.',
+      colors: { primary: '#0095d9', secondary: '#ffffff', dark: '#0a1923', dark2: '#132333', border: '#1f3349' },
+      services: defaultServices(),
+      reviews: [],
+      legalName: 'Point Break Electric',
+      licenseId: '1092452',
+    },
+
+    // ── E3: Aragon Electrical Services, Inc. ─────────────────────
+    e3: {
+      id: 'e3',
+      brandName: 'Aragon Electrical',
+      logoInitials: 'AE',
+      phone: '(831) 200-3661',
+      phoneTel: 'tel:+18312003661',
+      address: 'Marina, CA',
+      serviceArea: 'Santa Cruz, Monterey & San Benito Counties',
+      hours: 'Mon-Fri 7am-5pm',
+      yearsBadge: 'Since 2012',
+      heroTag: 'CA Lic. #1116511 — C-10 Contractor',
+      heroHeadline: "Above and Beyond. Every Visit. Aragon Electrical.",
+      heroSub: "Residential, commercial, and industrial. EV chargers, LED retrofits, lighting controls, building automation, public works. Tri-county service across Santa Cruz, Monterey, and San Benito.",
+      heroImage: 'https://images.unsplash.com/photo-1581094794329-c8112a89af12?auto=format&fit=crop&w=2000&q=80',
+      aboutHeadline: 'Nolan Aragon — journeyman since 2012',
+      aboutBody: 'Aragon Electrical Services has been on the tools since 2012 and officially licensed since 2022. Residential to industrial, single-family to commercial public works — we handle the full scope, communicate proactively, and finish what we start.',
+      reviewsHeadline: 'What Tri-County Customers Say',
+      reviewsSubLine: '★★★★★ Verified customer reviews — Santa Cruz, Monterey, San Benito',
+      licenseStrip: 'Aragon Electrical Services, Inc. — CA Lic. #1116511',
+      licenseLine: 'CA Lic. #1116511 — Fully Insured',
+      footerBlurb: 'Licensed C-10 contractor (CA #1116511) serving Santa Cruz, Monterey, and San Benito Counties. Residential, commercial, industrial, EV.',
+      colors: { primary: '#003d7a', secondary: '#f39c12', dark: '#0a1424', dark2: '#0f1d36', border: '#1c2d4a' },
+      services: defaultServices(),
+      reviews: [
+        { stars: 5, body: "Nolan went above and beyond on his visit to ensure the pump relay was working correctly.", author: 'Jake E.', meta: 'Verified Customer' },
+        { stars: 5, body: "Nolan Aragon provides excellent work. He is timely, communicates clearly, and gets the job done right.", author: 'Mark G.', meta: 'Verified Customer' },
+        { stars: 5, body: "Power went out during the big storms and my garage would not reset — Aragon had it fixed fast.", author: 'Jason N.', meta: 'Verified Customer' },
+        { stars: 5, body: "Installation of 240V outlet for EV charging. Aragon arrived on time and the work was clean.", author: 'John P.', meta: 'EV Charger Install' },
+      ],
+      legalName: 'Aragon Electrical Services, Inc.',
+      licenseId: '1116511',
+    },
+
+    // ── E4: Oscar's Electric Services ────────────────────────────
+    e4: {
+      id: 'e4',
+      brandName: "Oscar's Electric Services",
+      logoInitials: 'OE',
+      phone: '(833) 345-6852',
+      phoneTel: 'tel:+18333456852',
+      address: '1264 Fremont Blvd. #1, Seaside, CA 93955',
+      serviceArea: 'Monterey Peninsula',
+      hours: 'Mon-Fri 8am-5pm',
+      yearsBadge: '25+',
+      heroTag: 'Master Electrician — C-10 Licensed',
+      heroHeadline: "25+ Years of Electrical Mastery. Right Here in Seaside.",
+      heroSub: "Master electrician Oscar leads every project. Residential repair, commercial work, emergency service, panel upgrades, new construction lighting, circuit breakers — all to code, all guaranteed.",
+      heroImage: 'https://images.unsplash.com/photo-1581092446327-9b52bd1570c2?auto=format&fit=crop&w=2000&q=80',
+      aboutHeadline: 'Oscar — Master Electrician, 25+ years',
+      aboutBody: "Oscar is a C-10 Licensed Contractor with more than 25 years of electrical experience. Steve runs the business side. Together they deliver the kind of safety-first, code-correct work the Monterey Peninsula has trusted for decades.",
+      reviewsHeadline: 'Reviews',
+      reviewsSubLine: 'Real customer reviews coming soon — request samples from the owner',
+      licenseStrip: "Oscar's Electric Services — C-10 Licensed Contractor, Fully Insured",
+      licenseLine: "C-10 Licensed Contractor — Fully Insured",
+      footerBlurb: "Master electrician with 25+ years of experience. C-10 licensed, fully insured. Based in Seaside, serving the Monterey Peninsula.",
+      colors: { primary: '#e60000', secondary: '#1a1a1a', dark: '#0a0a0a', dark2: '#161616', border: '#2a2a2a' },
+      services: defaultServices(),
+      reviews: [],
+      legalName: "Oscar's Electric Services",
+      licenseId: '',
+    },
+  };
+
+  function defaultServices() {
+    return [
+      { title: 'Panel Upgrades', body: '100A to 200A+ service upgrades. Pulled, permitted, and inspected. Most jobs done in a single day.', img: 'https://images.unsplash.com/photo-1581094794329-c8112a89af12?auto=format&fit=crop&w=800&q=80' },
+      { title: 'EV Charger Installs', body: 'Level 2 home EV chargers — Tesla, ChargePoint, Wallbox, JuiceBox. Hardwired or plug-in.', img: 'https://images.unsplash.com/photo-1593941707882-a5bba14938c7?auto=format&fit=crop&w=800&q=80' },
+      { title: 'Lighting & LED', body: 'Recessed, accent, exterior, landscape, retrofit. Energy-efficient designs that look intentional.', img: 'https://images.unsplash.com/photo-1565538810643-b5bdb714032a?auto=format&fit=crop&w=800&q=80' },
+      { title: 'Remodels & Rewiring', body: 'Kitchen, bath, additions, whole-house. Knob-and-tube and aluminum rewires welcome.', img: 'https://images.unsplash.com/photo-1581092580497-e0d23cbdf1dc?auto=format&fit=crop&w=800&q=80' },
+      { title: 'Standby Generators', body: 'Generac, Kohler, Briggs & Stratton. Sized to your home. Automatic transfer switch installed.', img: 'https://images.unsplash.com/photo-1518709268805-4e9042af2176?auto=format&fit=crop&w=800&q=80' },
+      { title: 'Emergency Service', body: 'No power? Burning smell? Tripped main? We respond fast and diagnose without guesswork.', img: 'https://images.unsplash.com/photo-1581092335397-9583eb92d232?auto=format&fit=crop&w=800&q=80' },
+    ];
+  }
+
+  // ── ROUTER ───────────────────────────────────────────────────────
+  const VIEWS = ['home', 'ghl', 'mat', 'truexpanse', 'qac', 'summary'];
+
+  function getRoute() {
+    const hash = (location.hash || '#home').replace('#', '').toLowerCase();
+    // brand demo routes (e1-e4) all show the home view, but with their brand
+    if (['e1','e2','e3','e4'].includes(hash)) return { view: 'home', brand: hash };
+    if (VIEWS.includes(hash)) return { view: hash, brand: 'default' };
+    return { view: 'home', brand: 'default' };
+  }
+
+  function applyBrand(brand) {
+    const b = BRANDS[brand] || BRANDS.default;
+    // Colors as CSS vars
+    const root = document.documentElement;
+    root.style.setProperty('--brand-primary', b.colors.primary);
+    root.style.setProperty('--brand-secondary', b.colors.secondary);
+    root.style.setProperty('--brand-dark', b.colors.dark);
+    root.style.setProperty('--brand-dark-2', b.colors.dark2);
+    root.style.setProperty('--brand-border', b.colors.border);
+
+    // Text bindings
+    document.querySelectorAll('[data-bind]').forEach(el => {
+      const key = el.getAttribute('data-bind');
+      if (b[key] !== undefined) el.textContent = b[key];
+    });
+    // Href bindings (e.g. phoneTel)
+    document.querySelectorAll('[data-bind-href]').forEach(el => {
+      const key = el.getAttribute('data-bind-href');
+      if (b[key]) el.setAttribute('href', b[key]);
+    });
+    // src bindings (e.g. heroImage)
+    document.querySelectorAll('[data-bind-src]').forEach(el => {
+      const key = el.getAttribute('data-bind-src');
+      if (b[key]) el.setAttribute('src', b[key]);
+    });
+    // value bindings (hidden form fields)
+    document.querySelectorAll('[data-bind-value]').forEach(el => {
+      const key = el.getAttribute('data-bind-value');
+      if (b[key]) el.setAttribute('value', b[key]);
+    });
+
+    // Page title + description
+    document.getElementById('page-title').textContent = `${b.brandName} — ${b.serviceArea}`;
+    document.title = `${b.brandName} — ${b.serviceArea}`;
+    const desc = document.getElementById('page-desc');
+    if (desc) desc.setAttribute('content', `${b.brandName}. ${b.heroSub}`);
+
+    // Services grid
+    const grid = document.getElementById('services-grid');
+    if (grid) {
+      grid.innerHTML = b.services.map(s => `
+        <a href="#contact" class="service-card block bg-dark-2 border border-dark rounded-2xl overflow-hidden group">
+          <div class="h-48 overflow-hidden">
+            <img src="${s.img}" alt="${s.title}" class="w-full h-full object-cover group-hover:scale-105 transition" loading="lazy"/>
+          </div>
+          <div class="p-6">
+            <div class="flex items-start justify-between gap-3 mb-2">
+              <h3 class="font-display text-xl text-white">${s.title}</h3>
+              <svg class="text-brand mt-1 flex-shrink-0" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+            </div>
+            <p class="text-muted text-sm leading-relaxed">${s.body}</p>
+          </div>
+        </a>
+      `).join('');
+    }
+
+    // Reviews grid (only real ones, otherwise placeholder)
+    const rGrid = document.getElementById('reviews-grid');
+    if (rGrid) {
+      if (b.reviews && b.reviews.length) {
+        rGrid.innerHTML = b.reviews.map(r => `
+          <article class="bg-dark-2 border border-dark rounded-xl p-7 flex flex-col">
+            <div class="text-brand text-lg tracking-widest mb-4">${'★'.repeat(r.stars)}</div>
+            <p class="text-base leading-relaxed text-gray-200 mb-5 flex-1">&ldquo;${r.body}&rdquo;</p>
+            <div class="border-t border-dark pt-4">
+              <div class="font-bold text-white">${r.author}</div>
+              <div class="text-xs text-muted mt-0.5">${r.meta}</div>
+            </div>
+          </article>
+        `).join('');
+      } else {
+        rGrid.innerHTML = `
+          <div class="md:col-span-3 bg-dark-2 border-2 border-dashed border-dark rounded-2xl p-10 text-center">
+            <div class="text-brand font-bold uppercase tracking-widest text-xs mb-3">Reviews Coming Soon</div>
+            <p class="text-gray-300 text-lg mb-1">${b.brandName} has happy customers — we just haven't loaded their reviews yet.</p>
+            <p class="text-muted text-sm">Ask the owner for testimonials and we'll drop them in here.</p>
+          </div>
+        `;
+      }
+    }
+
+    // JSON-LD schema for SEO
+    const schema = {
+      "@context": "https://schema.org",
+      "@type": "Electrician",
+      "name": b.legalName || b.brandName,
+      "telephone": b.phone,
+      "address": { "@type": "PostalAddress", "addressLocality": b.address, "addressRegion": "CA", "addressCountry": "US" },
+      "areaServed": b.serviceArea,
+      "openingHours": b.hours,
+      ...(b.licenseId ? {
+        "hasCredential": {
+          "@type": "EducationalOccupationalCredential",
+          "credentialCategory": "license",
+          "name": "California Contractors State License Board",
+          "identifier": b.licenseId
+        }
+      } : {}),
+      ...(b.reviews && b.reviews.length ? {
+        "aggregateRating": { "@type": "AggregateRating", "ratingValue": "5.0", "reviewCount": String(b.reviews.length), "bestRating": "5" },
+        "review": b.reviews.map(r => ({
+          "@type": "Review",
+          "reviewRating": { "@type": "Rating", "ratingValue": String(r.stars) },
+          "author": { "@type": "Person", "name": r.author },
+          "reviewBody": r.body
+        }))
+      } : {})
+    };
+    document.getElementById('brand-schema').textContent = JSON.stringify(schema, null, 2);
+  }
+
+  function showView(viewName) {
+    document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+    const el = document.getElementById('view-' + viewName);
+    if (el) el.classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  }
+
+  function route() {
+    const { view, brand } = getRoute();
+    applyBrand(brand);
+    showView(view);
+  }
+
+  // Fade-in observer
+  function initFadeIns() {
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('is-visible');
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.15 });
+    document.querySelectorAll('.fade-in').forEach(el => io.observe(el));
+  }
+
+  // Boot
+  document.getElementById('year').textContent = new Date().getFullYear();
+  window.addEventListener('hashchange', route);
+  route();
+  initFadeIns();
+</script>
+
+</body>
+</html>
