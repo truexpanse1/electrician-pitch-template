@@ -64,6 +64,17 @@
   /* Service card hover */
   .service-card { transition: transform 0.3s ease, border-color 0.3s ease; }
   .service-card:hover { transform: translateY(-4px); border-color: var(--brand-primary); }
+  /* Service icon panels — branded gradient + subtle dot texture overlay */
+  .service-icon-panel { background: linear-gradient(135deg, var(--brand-primary) 0%, color-mix(in srgb, var(--brand-primary) 60%, #000) 100%); }
+  .service-icon-a    { background: linear-gradient(135deg, var(--brand-primary) 0%, color-mix(in srgb, var(--brand-primary) 60%, #000) 100%); }
+  .service-icon-b    { background: linear-gradient(135deg, color-mix(in srgb, var(--brand-primary) 75%, #1a1a1a) 0%, color-mix(in srgb, var(--brand-primary) 40%, #000) 100%); }
+  .service-icon-c    { background: linear-gradient(135deg, color-mix(in srgb, var(--brand-primary) 90%, var(--brand-secondary)) 0%, color-mix(in srgb, var(--brand-primary) 50%, #000) 100%); }
+  .service-icon-dots {
+    position: absolute; inset: 0;
+    background-image: radial-gradient(rgba(255,255,255,0.18) 1.5px, transparent 1.5px);
+    background-size: 24px 24px;
+    opacity: 0.4;
+  }
 
   /* Fade-in */
   .fade-in { opacity: 0; transform: translateY(20px); transition: opacity 0.7s ease, transform 0.7s ease; }
@@ -132,7 +143,7 @@
   <!-- HERO -->
   <section class="relative min-h-[640px] flex items-center overflow-hidden" id="home">
     <div class="absolute inset-0">
-      <img data-bind-src="heroImage" src="https://images.unsplash.com/photo-1565608438257-fac3c27beb36?auto=format&fit=crop&w=2000&q=80" alt="" class="w-full h-full object-cover" loading="eager"/>
+      <img data-bind-src="heroImage" src="https://images.unsplash.com/photo-1565608438257-fac3c27beb36?auto=format&fit=crop&w=2000&q=80" alt="" class="w-full h-full object-cover" loading="eager" onerror="this.style.display='none'; this.parentElement.style.background='linear-gradient(135deg, var(--brand-primary) 0%, var(--brand-dark) 100%)';"/>
       <div class="absolute inset-0 hero-overlay"></div>
     </div>
     <div class="relative max-w-7xl mx-auto px-4 py-20 grid lg:grid-cols-2 gap-12 w-full items-center">
@@ -806,14 +817,25 @@
     },
   };
 
+  // Service icons — inline SVGs rendered on a branded gradient panel.
+  // This replaces the previous Unsplash stock photos which were either wrong
+  // (kitchens for "lighting", CAD software for "remodels") or broken (the
+  // generator photo 404'd). Icon-card design = zero broken images, ever.
+  const SVG_PANEL = '<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="14" y="6" width="36" height="52" rx="3"/><rect x="20" y="14" width="10" height="8" rx="1"/><rect x="34" y="14" width="10" height="8" rx="1"/><rect x="20" y="26" width="10" height="8" rx="1"/><rect x="34" y="26" width="10" height="8" rx="1"/><rect x="20" y="38" width="10" height="8" rx="1"/><rect x="34" y="38" width="10" height="8" rx="1"/><circle cx="32" cy="52" r="1.5" fill="currentColor"/></svg>';
+  const SVG_EV = '<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 46V24a4 4 0 0 1 4-4h28a4 4 0 0 1 4 4v22"/><path d="M4 46h44"/><rect x="14" y="28" width="20" height="10" rx="1.5"/><path d="M48 30v8a4 4 0 0 0 4 4h2a4 4 0 0 0 4-4V18l-6-6"/><path d="m50 14 4 4"/><path d="M20 8v8"/><path d="m17 12 3 4 3-4"/></svg>';
+  const SVG_BULB = '<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 44a14 14 0 1 1 20 0c-2 2-3 4-3 7v1h-14v-1c0-3-1-5-3-7z"/><path d="M27 56h10"/><path d="M29 60h6"/><path d="M32 4v4"/><path d="M52 12l-3 3"/><path d="M60 32h-4"/><path d="M12 12l3 3"/><path d="M4 32h4"/></svg>';
+  const SVG_WIRE = '<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 14c0 6 6 8 12 8s12 2 12 8-6 8-12 8-12 2-12 8"/><path d="M32 14c0 6 6 8 12 8s12 2 12 8-6 8-12 8-12 2-12 8"/><circle cx="8" cy="14" r="3" fill="currentColor"/><circle cx="56" cy="50" r="3" fill="currentColor"/><path d="m44 32-3-3 6-6 3 3z"/></svg>';
+  const SVG_GEN = '<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="16" width="52" height="36" rx="3"/><rect x="6" y="16" width="52" height="10"/><circle cx="22" cy="38" r="6"/><path d="M22 32v12M16 38h12"/><rect x="38" y="32" width="14" height="4" rx="1"/><rect x="38" y="40" width="14" height="4" rx="1"/><path d="M14 10v6M50 10v6"/><path d="M22 52v4M42 52v4"/></svg>';
+  const SVG_BOLT = '<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M36 4 12 36h16l-4 24 24-32H32z" fill="currentColor" fill-opacity="0.15"/><path d="M36 4 12 36h16l-4 24 24-32H32z"/></svg>';
+
   function defaultServices() {
     return [
-      { title: 'Panel Upgrades', body: '100A to 200A+ service upgrades. Pulled, permitted, and inspected. Most jobs done in a single day.', img: 'https://images.unsplash.com/photo-1581094794329-c8112a89af12?auto=format&fit=crop&w=800&q=80' },
-      { title: 'EV Charger Installs', body: 'Level 2 home EV chargers — Tesla, ChargePoint, Wallbox, JuiceBox. Hardwired or plug-in.', img: 'https://images.unsplash.com/photo-1593941707882-a5bba14938c7?auto=format&fit=crop&w=800&q=80' },
-      { title: 'Lighting & LED', body: 'Recessed, accent, exterior, landscape, retrofit. Energy-efficient designs that look intentional.', img: 'https://images.unsplash.com/photo-1565538810643-b5bdb714032a?auto=format&fit=crop&w=800&q=80' },
-      { title: 'Remodels & Rewiring', body: 'Kitchen, bath, additions, whole-house. Knob-and-tube and aluminum rewires welcome.', img: 'https://images.unsplash.com/photo-1581092580497-e0d23cbdf1dc?auto=format&fit=crop&w=800&q=80' },
-      { title: 'Standby Generators', body: 'Generac, Kohler, Briggs & Stratton. Sized to your home. Automatic transfer switch installed.', img: 'https://images.unsplash.com/photo-1518709268805-4e9042af2176?auto=format&fit=crop&w=800&q=80' },
-      { title: 'Emergency Service', body: 'No power? Burning smell? Tripped main? We respond fast and diagnose without guesswork.', img: 'https://images.unsplash.com/photo-1581092335397-9583eb92d232?auto=format&fit=crop&w=800&q=80' },
+      { title: 'Panel Upgrades',      body: '100A to 200A+ service upgrades. Pulled, permitted, and inspected. Most jobs done in a single day.',           icon: SVG_PANEL, accent: 'a' },
+      { title: 'EV Charger Installs', body: 'Level 2 home EV chargers — Tesla, ChargePoint, Wallbox, JuiceBox. Hardwired or plug-in.',                       icon: SVG_EV,    accent: 'b' },
+      { title: 'Lighting & LED',      body: 'Recessed, accent, exterior, landscape, retrofit. Energy-efficient designs that look intentional.',              icon: SVG_BULB,  accent: 'c' },
+      { title: 'Remodels & Rewiring', body: 'Kitchen, bath, additions, whole-house. Knob-and-tube and aluminum rewires welcome.',                            icon: SVG_WIRE,  accent: 'a' },
+      { title: 'Standby Generators',  body: 'Generac, Kohler, Briggs & Stratton. Sized to your home. Automatic transfer switch installed.',                  icon: SVG_GEN,   accent: 'b' },
+      { title: 'Emergency Service',   body: 'No power? Burning smell? Tripped main? We respond fast and diagnose without guesswork.',                        icon: SVG_BOLT,  accent: 'c' },
     ];
   }
 
@@ -865,13 +887,16 @@
     const desc = document.getElementById('page-desc');
     if (desc) desc.setAttribute('content', `${b.brandName}. ${b.heroSub}`);
 
-    // Services grid
+    // Services grid — icon-card design (no external images, never breaks)
     const grid = document.getElementById('services-grid');
     if (grid) {
       grid.innerHTML = b.services.map(s => `
         <a href="#contact" class="service-card block bg-dark-2 border border-dark rounded-2xl overflow-hidden group">
-          <div class="h-48 overflow-hidden">
-            <img src="${s.img}" alt="${s.title}" class="w-full h-full object-cover group-hover:scale-105 transition" loading="lazy"/>
+          <div class="service-icon-panel service-icon-${s.accent || 'a'} h-48 flex items-center justify-center relative overflow-hidden">
+            <div class="service-icon-dots" aria-hidden="true"></div>
+            <div class="text-white relative z-10 group-hover:scale-110 transition" style="width:96px;height:96px;">
+              ${s.icon}
+            </div>
           </div>
           <div class="p-6">
             <div class="flex items-start justify-between gap-3 mb-2">
