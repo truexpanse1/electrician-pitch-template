@@ -798,6 +798,33 @@
      BRAND CONFIG + ROUTER
 ================================================================= -->
 <script>
+  // ── SVG ICON CONSTANTS ───────────────────────────────────────────
+  // CRITICAL: these MUST be declared BEFORE `const BRANDS = {...}`. The
+  // BRANDS object literal calls defaultServices() during construction,
+  // which references SVG_PANEL/EV/BULB/WIRE/GEN/BOLT. If those consts
+  // are declared later in the script (as they were originally), the
+  // BRANDS init throws "Cannot access 'SVG_X' before initialization",
+  // leaves BRANDS in permanent TDZ, and silently breaks every event
+  // handler that needs BRANDS — including the SPA router. Don't move
+  // these back down without re-thinking the whole router architecture.
+  const SVG_PANEL = '<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="14" y="6" width="36" height="52" rx="3"/><rect x="20" y="14" width="10" height="8" rx="1"/><rect x="34" y="14" width="10" height="8" rx="1"/><rect x="20" y="26" width="10" height="8" rx="1"/><rect x="34" y="26" width="10" height="8" rx="1"/><rect x="20" y="38" width="10" height="8" rx="1"/><rect x="34" y="38" width="10" height="8" rx="1"/><circle cx="32" cy="52" r="1.5" fill="currentColor"/></svg>';
+  const SVG_EV = '<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 46V24a4 4 0 0 1 4-4h28a4 4 0 0 1 4 4v22"/><path d="M4 46h44"/><rect x="14" y="28" width="20" height="10" rx="1.5"/><path d="M48 30v8a4 4 0 0 0 4 4h2a4 4 0 0 0 4-4V18l-6-6"/><path d="m50 14 4 4"/><path d="M20 8v8"/><path d="m17 12 3 4 3-4"/></svg>';
+  const SVG_BULB = '<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 44a14 14 0 1 1 20 0c-2 2-3 4-3 7v1h-14v-1c0-3-1-5-3-7z"/><path d="M27 56h10"/><path d="M29 60h6"/><path d="M32 4v4"/><path d="M52 12l-3 3"/><path d="M60 32h-4"/><path d="M12 12l3 3"/><path d="M4 32h4"/></svg>';
+  const SVG_WIRE = '<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 14c0 6 6 8 12 8s12 2 12 8-6 8-12 8-12 2-12 8"/><path d="M32 14c0 6 6 8 12 8s12 2 12 8-6 8-12 8-12 2-12 8"/><circle cx="8" cy="14" r="3" fill="currentColor"/><circle cx="56" cy="50" r="3" fill="currentColor"/><path d="m44 32-3-3 6-6 3 3z"/></svg>';
+  const SVG_GEN = '<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="16" width="52" height="36" rx="3"/><rect x="6" y="16" width="52" height="10"/><circle cx="22" cy="38" r="6"/><path d="M22 32v12M16 38h12"/><rect x="38" y="32" width="14" height="4" rx="1"/><rect x="38" y="40" width="14" height="4" rx="1"/><path d="M14 10v6M50 10v6"/><path d="M22 52v4M42 52v4"/></svg>';
+  const SVG_BOLT = '<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M36 4 12 36h16l-4 24 24-32H32z" fill="currentColor" fill-opacity="0.15"/><path d="M36 4 12 36h16l-4 24 24-32H32z"/></svg>';
+
+  function defaultServices() {
+    return [
+      { title: 'Panel Upgrades',      body: '100A to 200A+ service upgrades. Pulled, permitted, and inspected. Most jobs done in a single day.',           icon: SVG_PANEL, accent: 'a' },
+      { title: 'EV Charger Installs', body: 'Level 2 home EV chargers — Tesla, ChargePoint, Wallbox, JuiceBox. Hardwired or plug-in.',                       icon: SVG_EV,    accent: 'b' },
+      { title: 'Lighting & LED',      body: 'Recessed, accent, exterior, landscape, retrofit. Energy-efficient designs that look intentional.',              icon: SVG_BULB,  accent: 'c' },
+      { title: 'Remodels & Rewiring', body: 'Kitchen, bath, additions, whole-house. Knob-and-tube and aluminum rewires welcome.',                            icon: SVG_WIRE,  accent: 'a' },
+      { title: 'Standby Generators',  body: 'Generac, Kohler, Briggs & Stratton. Sized to your home. Automatic transfer switch installed.',                  icon: SVG_GEN,   accent: 'b' },
+      { title: 'Emergency Service',   body: 'No power? Burning smell? Tripped main? We respond fast and diagnose without guesswork.',                        icon: SVG_BOLT,  accent: 'c' },
+    ];
+  }
+
   // ── BRAND CONFIGS ────────────────────────────────────────────────
   // Real data extracted from each electrician's live site.
   // Brand colors are chosen as defensible placeholders to match the
@@ -959,38 +986,25 @@
     },
   };
 
-  // Service icons — inline SVGs rendered on a branded gradient panel.
-  // This replaces the previous Unsplash stock photos which were either wrong
-  // (kitchens for "lighting", CAD software for "remodels") or broken (the
-  // generator photo 404'd). Icon-card design = zero broken images, ever.
-  const SVG_PANEL = '<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="14" y="6" width="36" height="52" rx="3"/><rect x="20" y="14" width="10" height="8" rx="1"/><rect x="34" y="14" width="10" height="8" rx="1"/><rect x="20" y="26" width="10" height="8" rx="1"/><rect x="34" y="26" width="10" height="8" rx="1"/><rect x="20" y="38" width="10" height="8" rx="1"/><rect x="34" y="38" width="10" height="8" rx="1"/><circle cx="32" cy="52" r="1.5" fill="currentColor"/></svg>';
-  const SVG_EV = '<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 46V24a4 4 0 0 1 4-4h28a4 4 0 0 1 4 4v22"/><path d="M4 46h44"/><rect x="14" y="28" width="20" height="10" rx="1.5"/><path d="M48 30v8a4 4 0 0 0 4 4h2a4 4 0 0 0 4-4V18l-6-6"/><path d="m50 14 4 4"/><path d="M20 8v8"/><path d="m17 12 3 4 3-4"/></svg>';
-  const SVG_BULB = '<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 44a14 14 0 1 1 20 0c-2 2-3 4-3 7v1h-14v-1c0-3-1-5-3-7z"/><path d="M27 56h10"/><path d="M29 60h6"/><path d="M32 4v4"/><path d="M52 12l-3 3"/><path d="M60 32h-4"/><path d="M12 12l3 3"/><path d="M4 32h4"/></svg>';
-  const SVG_WIRE = '<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 14c0 6 6 8 12 8s12 2 12 8-6 8-12 8-12 2-12 8"/><path d="M32 14c0 6 6 8 12 8s12 2 12 8-6 8-12 8-12 2-12 8"/><circle cx="8" cy="14" r="3" fill="currentColor"/><circle cx="56" cy="50" r="3" fill="currentColor"/><path d="m44 32-3-3 6-6 3 3z"/></svg>';
-  const SVG_GEN = '<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="16" width="52" height="36" rx="3"/><rect x="6" y="16" width="52" height="10"/><circle cx="22" cy="38" r="6"/><path d="M22 32v12M16 38h12"/><rect x="38" y="32" width="14" height="4" rx="1"/><rect x="38" y="40" width="14" height="4" rx="1"/><path d="M14 10v6M50 10v6"/><path d="M22 52v4M42 52v4"/></svg>';
-  const SVG_BOLT = '<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M36 4 12 36h16l-4 24 24-32H32z" fill="currentColor" fill-opacity="0.15"/><path d="M36 4 12 36h16l-4 24 24-32H32z"/></svg>';
-
-  function defaultServices() {
-    return [
-      { title: 'Panel Upgrades',      body: '100A to 200A+ service upgrades. Pulled, permitted, and inspected. Most jobs done in a single day.',           icon: SVG_PANEL, accent: 'a' },
-      { title: 'EV Charger Installs', body: 'Level 2 home EV chargers — Tesla, ChargePoint, Wallbox, JuiceBox. Hardwired or plug-in.',                       icon: SVG_EV,    accent: 'b' },
-      { title: 'Lighting & LED',      body: 'Recessed, accent, exterior, landscape, retrofit. Energy-efficient designs that look intentional.',              icon: SVG_BULB,  accent: 'c' },
-      { title: 'Remodels & Rewiring', body: 'Kitchen, bath, additions, whole-house. Knob-and-tube and aluminum rewires welcome.',                            icon: SVG_WIRE,  accent: 'a' },
-      { title: 'Standby Generators',  body: 'Generac, Kohler, Briggs & Stratton. Sized to your home. Automatic transfer switch installed.',                  icon: SVG_GEN,   accent: 'b' },
-      { title: 'Emergency Service',   body: 'No power? Burning smell? Tripped main? We respond fast and diagnose without guesswork.',                        icon: SVG_BOLT,  accent: 'c' },
-    ];
-  }
+  // (SVG icon constants + defaultServices() moved to the TOP of this script
+  //  block to avoid the TDZ cascade that broke the SPA router. See the
+  //  block above for the active declarations and an explanation.)
 
   // ── ROUTER ───────────────────────────────────────────────────────
-  // 'hub' is Don's internal review dashboard — full nav over all demos + pitch pages.
-  // Not linked from any prospect-facing view; bookmark electrician-pitch.netlify.app/#hub.
-  const VIEWS = ['home', 'ghl', 'mat', 'truexpanse', 'qac', 'summary', 'hub'];
-
+  // CRITICAL: the views list is INLINED inside getRoute. Earlier it lived as
+  // a top-level `const VIEWS = [...]` declared just before getRoute. The
+  // hashchange event was triggering getRoute() in a context that hit a TDZ
+  // error ("Cannot access 'VIEWS' before initialization") and silently
+  // failed — so on every hashchange the view never switched and Don's
+  // prospects saw the home view stuck no matter which URL they opened.
+  // Inlining the array eliminates the TDZ entirely. Never re-extract.
   function getRoute() {
     const hash = (location.hash || '#home').replace('#', '').toLowerCase();
     // brand demo routes (e1-e4) all show the home view, but with their brand
     if (['e1','e2','e3','e4'].includes(hash)) return { view: 'home', brand: hash };
-    if (VIEWS.includes(hash)) return { view: hash, brand: 'default' };
+    if (['home','ghl','mat','truexpanse','qac','summary','hub'].includes(hash)) {
+      return { view: hash, brand: 'default' };
+    }
     return { view: 'home', brand: 'default' };
   }
 
@@ -1116,17 +1130,24 @@
   }
 
   function route() {
-    const { view, brand } = getRoute();
-    applyBrand(brand);
-    showView(view);
-    // FAIL-OPEN nav: HTML default = visible. JS only HIDES on branded views.
-    // If JS fails, Don always has nav links — that's the priority. Prospect
-    // privacy on branded views still works when JS runs normally.
-    const isProspectView = ['e1','e2','e3','e4'].includes(brand);
-    const demos = document.getElementById('footer-demos');
-    if (demos) demos.style.display = isProspectView ? 'none' : 'block';
-    const pill = document.getElementById('hub-pill');
-    if (pill) pill.style.display = isProspectView ? 'none' : 'inline-flex';
+    // Top-level guard: surface any throw to console instead of swallowing it
+    // silently. Silent failure here is what hid the TDZ-on-VIEWS bug for a
+    // full afternoon of broken pitches.
+    try {
+      const { view, brand } = getRoute();
+      applyBrand(brand);
+      showView(view);
+      // FAIL-OPEN nav: HTML default = visible. JS only HIDES on branded views.
+      // If JS fails, Don always has nav links — that's the priority. Prospect
+      // privacy on branded views still works when JS runs normally.
+      const isProspectView = ['e1','e2','e3','e4'].includes(brand);
+      const demos = document.getElementById('footer-demos');
+      if (demos) demos.style.display = isProspectView ? 'none' : 'block';
+      const pill = document.getElementById('hub-pill');
+      if (pill) pill.style.display = isProspectView ? 'none' : 'inline-flex';
+    } catch (err) {
+      console.error('[route] failed:', err);
+    }
   }
 
   // Fade-in observer

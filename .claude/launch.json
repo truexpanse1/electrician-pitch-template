@@ -1,0 +1,12 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "electrician-pitch-local",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": ["-m", "http.server", "5757"],
+      "port": 5757,
+      "cwd": "/Users/donsmith/Documents/Claude-Sessions/claude and Don/projects/electrician-pitch-template"
+    }
+  ]
+}
